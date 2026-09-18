@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Explorer — Manual</title>
+<meta name="description" content="Everything Claude Explorer does: features, menus, commands and keyboard shortcuts.">
+<meta property="og:title" content="Claude Explorer — Manual">
+<meta property="og:description" content="Everything Claude Explorer does: features, menus, commands and keyboard shortcuts.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23C15F3C'/%3E%3Cpath d='M6 10h7l2 2h11v11H6z' fill='%23F5F1E8'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#F5F1E8; --bg-panel:#FAF7F0; --bg-sunken:#EDE7D9;
+  --ink:#2B2622; --ink-soft:#6B6358; --line:#D9CFBE;
+  --clay:#C15F3C; --clay-soft:#E4B49C; --sel:#EADFC8;
+  --term-bg:#262019; --term-fg:#E8E0D0;
+  --warn:#9A6B12;
+  --font-serif:"Times New Roman",Georgia,serif;
+  --font-mono:"Cascadia Mono",Consolas,ui-monospace,monospace;
+  --radius:3px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#22201B; --bg-panel:#2B2822; --bg-sunken:#1C1A16;
+  --ink:#ECE4D4; --ink-soft:#A79B85; --line:#3D3830;
+  --clay:#D2795A; --clay-soft:#5A4436; --sel:#3A342A;
+  --warn:#D2A63C;
+}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--font-serif);font-size:17px;line-height:1.6;
+  background-image:radial-gradient(rgba(120,100,70,.035) 1px,transparent 1px);
+  background-size:3px 3px;-webkit-text-size-adjust:100%;
+}
+.wrap{display:grid;grid-template-columns:248px minmax(0,1fr);gap:48px;max-width:1180px;margin:0 auto;padding:0 32px}
+nav.toc{position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto;padding:30px 0 48px;font-size:14px}
+nav.toc .brand{display:flex;align-items:center;gap:9px;margin-bottom:6px;text-decoration:none;color:var(--ink)}
+nav.toc .brand b{font-size:18px}
+nav.toc .ver{display:inline-block;margin:0 0 18px 33px;font-family:var(--font-mono);font-size:11px;color:var(--ink-soft);border:1px solid var(--line);border-radius:2px;padding:0 5px}
+nav.toc ol{list-style:none;margin:0;padding:0}
+nav.toc a{display:block;padding:3px 10px;color:var(--ink-soft);text-decoration:none;border-left:2px solid var(--line)}
+nav.toc a:hover{color:var(--clay);background:var(--bg-panel);border-left-color:var(--clay)}
+nav.toc .grp{margin:15px 0 3px;padding:0 10px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-family:var(--font-mono)}
+main{padding:30px 0 96px;min-width:0}
+header.hero{border-bottom:1px solid var(--line);padding-bottom:26px}
+header.hero h1{font-size:42px;line-height:1.1;margin:0 0 10px;font-weight:normal;letter-spacing:-.01em}
+header.hero p.lede{font-size:20px;color:var(--ink-soft);margin:0 0 18px;max-width:62ch}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-family:var(--font-mono);font-size:12px;padding:3px 9px;border:1px solid var(--line);border-radius:999px;color:var(--ink-soft);background:var(--bg-panel);text-decoration:none}
+a.pill:hover{border-color:var(--clay);color:var(--clay)}
+section{padding-top:44px}
+h2{font-size:27px;font-weight:normal;margin:0;padding-bottom:6px;border-bottom:2px solid var(--clay);display:inline-block}
+h2 .n{font-family:var(--font-mono);font-size:13px;color:var(--clay);margin-right:10px;vertical-align:3px}
+h3{font-size:20px;font-weight:normal;margin:30px 0 4px}
+h4{font-size:14px;font-weight:bold;margin:22px 0 4px;color:var(--ink-soft);font-family:var(--font-mono);letter-spacing:.03em;text-transform:uppercase}
+p{margin:.55em 0;max-width:72ch}
+ul,ol.body{max-width:72ch;padding-left:22px;margin:.5em 0}
+li{margin:.25em 0}
+a{color:var(--clay)}
+a:hover{text-decoration:none}
+/* No `white-space:nowrap` here: a long inline literal (a Windows path, an
+   `xattr -cr "/Applications/…"` command) is wider than a phone's content box
+   and pushes the whole page sideways. Wrapping anywhere is the lesser evil. */
+code{font-family:var(--font-mono);font-size:.85em;background:var(--bg-sunken);border:1px solid var(--line);border-radius:2px;padding:.5px 4px;overflow-wrap:anywhere}
+pre{background:var(--term-bg);color:var(--term-fg);border-radius:var(--radius);padding:13px 16px;overflow-x:auto;font-family:var(--font-mono);font-size:13.5px;line-height:1.55;max-width:72ch}
+pre code{background:none;border:none;padding:0;color:inherit;font-size:inherit;white-space:pre}
+.tw{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-panel)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{text-align:left;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);
+   background:var(--bg-sunken);padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap;font-weight:normal}
+td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--sel)}
+td.k{white-space:nowrap}
+td.c{white-space:nowrap;color:var(--ink-soft);font-size:14px}
+kbd{font-family:var(--font-mono);font-size:12.5px;display:inline-block;padding:1px 6px;
+    border:1px solid var(--line);border-bottom-width:2px;border-radius:3px;
+    background:var(--bg);color:var(--ink);white-space:nowrap}
+.note{border-left:3px solid var(--clay);background:var(--bg-panel);padding:10px 16px;margin:16px 0;max-width:72ch;font-size:15.5px}
+.note b{color:var(--clay)}
+.note.warn{border-left-color:var(--warn)}
+.note.warn b{color:var(--warn)}
+.menu{font-family:var(--font-mono);font-size:13.5px;background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;max-width:72ch;margin:12px 0}
+.menu ul{list-style:none;padding-left:0;margin:0;max-width:none}
+.menu ul ul{padding-left:16px;border-left:1px dotted var(--line);margin-left:3px}
+.menu li{margin:2px 0;display:flex;gap:14px;justify-content:space-between;align-items:baseline}
+.menu li>span:last-child{color:var(--ink-soft);font-family:var(--font-serif);font-size:13.5px;text-align:right;flex:none;max-width:44%}
+.menu .top{color:var(--clay);margin-top:9px;font-weight:bold}
+.menu .top:first-child{margin-top:0}
+.menu hr{border:none;border-top:1px dotted var(--line);margin:4px 0}
+footer{border-top:1px solid var(--line);margin-top:60px;padding-top:20px;font-size:14px;color:var(--ink-soft)}
+footer p{max-width:none}
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr;gap:0;padding:0 16px}
+  nav.toc{position:static;max-height:none;padding:20px 0 14px;border-bottom:1px solid var(--line)}
+  nav.toc ol{columns:2;column-gap:18px}
+  header.hero h1{font-size:31px}
+  header.hero p.lede{font-size:18px}
+  body{font-size:16px}
+}
+@media print{nav.toc{display:none}.wrap{display:block;max-width:none}a{color:inherit}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="toc">
+  <a class="brand" href="#top">
+    <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="4" fill="#C15F3C"/><path d="M6 10h7l2 2h11v11H6z" fill="#F5F1E8"/></svg>
+    <b>Claude Explorer</b>
+  </a>
+  <span class="ver">v0.10.1</span>
+  <ol>
+    <li class="grp">Start</li>
+    <li><a href="#install">Install &amp; requirements</a></li>
+    <li><a href="#concepts">How it fits together</a></li>
+    <li class="grp">Using it</li>
+    <li><a href="#browsing">Browsing files</a></li>
+    <li><a href="#fileops">File operations</a></li>
+    <li><a href="#dnd">Drag and drop</a></li>
+    <li><a href="#search">Search</a></li>
+    <li><a href="#git">Git &amp; the diff view</a></li>
+    <li><a href="#viewer">File viewer</a></li>
+    <li class="grp">Workspace</li>
+    <li><a href="#tabs">Tabs &amp; groups</a></li>
+    <li><a href="#spaces">Spaces</a></li>
+    <li><a href="#split">Split view</a></li>
+    <li><a href="#terminals">Terminals</a></li>
+    <li><a href="#awareness">Session awareness</a></li>
+    <li class="grp">Reference</li>
+    <li><a href="#keys">Keyboard shortcuts</a></li>
+    <li><a href="#menus">Menu reference</a></li>
+    <li><a href="#settings">Settings</a></li>
+    <li><a href="#cli">Command line</a></li>
+    <li><a href="#modes">Explorer vs Developer</a></li>
+    <li><a href="#agent">Agent control (MCP)</a></li>
+    <li class="grp">Housekeeping</li>
+    <li><a href="#data">Where data lives</a></li>
+    <li><a href="#platforms">Platforms &amp; updates</a></li>
+  </ol>
+</nav>
+
+<main id="top">
+
+<header class="hero">
+  <h1>Claude Explorer</h1>
+  <p class="lede">A file manager built around one thing: launching Claude Code from any folder in one action &mdash; and keeping every session you start somewhere you can actually see it.</p>
+  <div class="pills">
+    <span class="pill">v0.10.1</span>
+    <a class="pill" href="https://github.com/danmano411/claude-explorer">GitHub</a>
+    <a class="pill" href="https://github.com/danmano411/claude-explorer/releases">Releases</a>
+    <span class="pill">Apache-2.0</span>
+  </div>
+</header>
+
+<!-- ============================================================ -->
+<section id="install">
+<h2><span class="n">01</span>Install &amp; requirements</h2>
+
+<p>Claude Explorer launches the <a href="https://claude.com/claude-code">Claude Code</a> CLI you already have. It does <em>not</em> bundle one &mdash; install Claude Code first and make sure <code>claude</code> runs in a terminal.</p>
+
+<h4>From a release</h4>
+<ol class="body">
+  <li>Download the artifact for your platform from the <a href="https://github.com/danmano411/claude-explorer/releases">Releases page</a>.</li>
+  <li>Run it. On Windows you get a Desktop shortcut and a Start Menu entry, plus an <b>Open in Claude Explorer</b> entry on the right-click menu of any folder.</li>
+  <li>Running a newer installer later upgrades in place and keeps your settings, recent folders and workspace.</li>
+</ol>
+
+<h4>From source</h4>
+<pre><code>git clone https://github.com/danmano411/claude-explorer.git
+cd claude-explorer
+npm install
+npm run package     # -> dist/Claude Explorer Setup x.y.z.exe
+
+npm run dev         # or: live development</code></pre>
+
+<div class="note"><b>Windows is the tested platform.</b> macOS and Linux builds ship from the same release but have had far less real-world use. See <a href="#platforms">Platforms &amp; updates</a> for the differences that are deliberate.</div>
+</section>
+
+<!-- ============================================================ -->
+<section id="concepts">
+<h2><span class="n">02</span>How it fits together</h2>
+
+<p>Three ideas carry the whole app.</p>
+
+<h3>Tabs</h3>
+<p>A tab is independently one of three things:</p>
+<div class="tw"><table>
+<thead><tr><th>Tab</th><th>What it is</th><th>How you get one</th></tr></thead>
+<tbody>
+<tr><td class="k"><b>Files</b></td><td>A folder listing &mdash; the File Explorer half.</td><td>The <code>+</code> button, <kbd>Ctrl</kbd>+<kbd>T</kbd>, File ▸ Open Recent, the CLI, or the Explorer right-click verb.</td></tr>
+<tr><td class="k"><b>Terminal</b></td><td>A live terminal: either a <b>Claude session</b> or a <b>plain shell</b>.</td><td>The <span style="color:var(--clay)">→</span> arrow on any folder row; File ▸ Open Recent; the tab menu's <b>Open Terminal</b>.</td></tr>
+<tr><td class="k"><b>Viewer</b></td><td>A read-only file view, or a git diff.</td><td>Double-click a file; <b>Show changes</b> on a modified file.</td></tr>
+</tbody>
+</table></div>
+
+<h3>Spaces</h3>
+<p>Separate named workspaces. Each one owns its own tabs, its own split layout and its own remembered active tab. One space per project is the intended shape. A tab belongs to exactly one space &mdash; moving it to another space removes it from the first.</p>
+
+<h3>Session awareness</h3>
+<p>Every Claude session reports what it is <em>actually</em> doing &mdash; working, waiting on you, finished &mdash; read from Claude Code's own hooks rather than guessed from terminal output. A session blocked in a space you are not looking at marks its tab, its space and the spaces menu, so it cannot stall unnoticed.</p>
+
+<div class="note"><b>Editing stays in Claude.</b> The file viewer is read-only on purpose. This app's job is to supervise the AI doing the editing &mdash; browse, launch, watch, review the diff &mdash; not to be a worse version of two tools you already have.</div>
+</section>
+
+<!-- ============================================================ -->
+<section id="browsing">
+<h2><span class="n">03</span>Browsing files</h2>
+
+<p>A files tab is a single-column listing: directories first, then files, each sorted by name. There is no size or date column and no sort control.</p>
+
+<h4>What a row can show</h4>
+<ul>
+  <li>A <b>git status letter</b> in the left gutter (see <a href="#git">Git &amp; the diff view</a>).</li>
+  <li>A folder or file icon, and the name.</li>
+  <li><code>↗</code> if the entry is a symlink or junction.</li>
+  <li>On folders only, a <span style="color:var(--clay)">→</span> button: <b>Open this folder in Claude</b>. It starts a Claude Code session rooted there without navigating into the folder.</li>
+</ul>
+
+<h4>Getting around</h4>
+<div class="tw"><table>
+<thead><tr><th>Action</th><th>How</th></tr></thead>
+<tbody>
+<tr><td>Open a folder</td><td class="c">Double-click, or <b>Open</b> in the right-click menu</td></tr>
+<tr><td>Open a file in the viewer</td><td class="c">Double-click, or <b>Open</b></td></tr>
+<tr><td>Up one level</td><td class="c"><kbd>Backspace</kbd></td></tr>
+<tr><td>Back / Forward</td><td class="c"><kbd>Alt</kbd>+<kbd>←</kbd> / <kbd>Alt</kbd>+<kbd>→</kbd>, or the ◀ ▶ buttons</td></tr>
+<tr><td>Refresh listing and git status</td><td class="c"><kbd>F5</kbd>, or the ⟳ button</td></tr>
+<tr><td>Jump to a typed path</td><td class="c">Click empty space in the breadcrumb strip, type, <kbd>Enter</kbd></td></tr>
+<tr><td>Jump to an ancestor folder</td><td class="c">Click any breadcrumb segment</td></tr>
+</tbody>
+</table></div>
+<p>The address bar checks that the path exists before navigating; a path that does not resolve leaves you where you are. <kbd>Esc</kbd> cancels the edit.</p>
+
+<h4>Selecting</h4>
+<div class="tw"><table>
+<thead><tr><th>Gesture</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td class="c">Click</td><td>Select just that row, and make it the anchor.</td></tr>
+<tr><td class="c"><kbd>Ctrl</kbd>+click</td><td>Toggle that row in or out of the selection; it becomes the anchor.</td></tr>
+<tr><td class="c"><kbd>Shift</kbd>+click</td><td>Select the range from the anchor to this row, replacing the selection.</td></tr>
+<tr><td class="c"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+click</td><td>Add that range to the existing selection, and move the anchor.</td></tr>
+<tr><td class="c"><kbd>Ctrl</kbd>+<kbd>A</kbd></td><td>Select every visible row.</td></tr>
+<tr><td class="c"><kbd>Esc</kbd></td><td>Clear the selection and close any open menu.</td></tr>
+<tr><td class="c">Right-click</td><td>On an unselected row, selects just it first. On an already-selected row, keeps the whole multi-selection.</td></tr>
+</tbody>
+</table></div>
+
+<div class="note">There is no keyboard navigation of the file list itself &mdash; arrow keys do not move a cursor between rows, and <kbd>Enter</kbd> does not open the selection. Opening is mouse-driven: double-click, the context menu, or the folder row's arrow.</div>
+</section>
+
+<!-- ============================================================ -->
+<section id="fileops">
+<h2><span class="n">04</span>File operations</h2>
+
+<p>Everything below is reversible with <kbd>Ctrl</kbd>+<kbd>Z</kbd> except permanent delete, which says so first.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Operation</th><th>Shortcut</th><th>Menu item</th><th>Confirmation</th></tr></thead>
+<tbody>
+<tr><td>Cut</td><td class="c"><kbd>Ctrl</kbd>+<kbd>X</kbd></td><td class="c">Cut</td><td class="c">&mdash;</td></tr>
+<tr><td>Copy</td><td class="c"><kbd>Ctrl</kbd>+<kbd>C</kbd></td><td class="c">Copy</td><td class="c">&mdash;</td></tr>
+<tr><td>Paste</td><td class="c"><kbd>Ctrl</kbd>+<kbd>V</kbd></td><td class="c">Paste</td><td class="c">&mdash;</td></tr>
+<tr><td>Rename</td><td class="c"><kbd>F2</kbd></td><td class="c">Rename</td><td>Fails loudly if the name is taken &mdash; it never silently replaces.</td></tr>
+<tr><td>New folder</td><td class="c"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd></td><td class="c">New Folder</td><td class="c">&mdash;</td></tr>
+<tr><td>New file</td><td class="c">&mdash;</td><td class="c">New File</td><td class="c">&mdash;</td></tr>
+<tr><td>Delete</td><td class="c"><kbd>Delete</kbd></td><td class="c">Delete</td><td>Always asks. Restorable with <kbd>Ctrl</kbd>+<kbd>Z</kbd> or from the Recycle Bin.</td></tr>
+<tr><td><b>Permanent</b> delete</td><td class="c"><kbd>Shift</kbd>+<kbd>Delete</kbd></td><td class="c">&mdash;</td><td>Developer mode only, and you must type <code>CONFIRM</code>. No undo entry is created.</td></tr>
+<tr><td>Undo</td><td class="c"><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td class="c">&mdash;</td><td class="c">&mdash;</td></tr>
+<tr><td>Redo</td><td class="c"><kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td class="c">&mdash;</td><td class="c">&mdash;</td></tr>
+</tbody>
+</table></div>
+
+<p>New Folder and New File both drop you straight into the rename box on the new item, so you can name it without a second gesture. Copy and Cut also put the selected paths on the system clipboard as text, so you can paste them into a Claude prompt &mdash; unless a real file-drop is already on the clipboard, which is left alone.</p>
+
+<h3>Where deleted files go</h3>
+<p>A delete does not go straight to the Recycle Bin. Each item is first staged into a <code>.claude-explorer-trash</code> folder on the same drive, with a manifest recording where it came from. That is what makes <kbd>Ctrl</kbd>+<kbd>Z</kbd> a cheap, reliable rename back into place rather than a best-effort Recycle Bin restore.</p>
+<p>Staged items are handed to the real Recycle Bin when their undo life is over, and a full sweep runs on quit. Anything left behind by an unclean exit is recovered at the next launch. On a volume with no Recycle Bin &mdash; a network share, say &mdash; items stay staged and you are told they will be retried next launch.</p>
+<p>The undo stack holds the last 100 operations and covers delete, rename, move, copy, new folder and new file. A rejected undo leaves both stacks untouched.</p>
+
+<div class="note warn"><b>Permanent delete is genuinely permanent.</b> <kbd>Shift</kbd>+<kbd>Delete</kbd> skips the staging folder entirely, so there is no undo entry to use afterwards. It is refused outright in Explorer mode.</div>
+
+<h3>Right-click menus</h3>
+<p><b>On a file or folder:</b> Open · Open in Claude <span style="color:var(--ink-soft)">(folders)</span> · Open in external terminal <span style="color:var(--ink-soft)">(folders)</span> · Show changes <span style="color:var(--ink-soft)">(modified files)</span> · Open in default app <span style="color:var(--ink-soft)">(files)</span> · Cut · Copy · Paste · Rename · New Folder · New File · Delete · Reveal in File Explorer.</p>
+<p><b>On empty space:</b> Paste · New Folder · New File · Reveal in File Explorer.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="dnd">
+<h2><span class="n">05</span>Drag and drop</h2>
+
+<p>You can drag between folders, between tabs, and between panes of a split.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Gesture</th><th>Result</th></tr></thead>
+<tbody>
+<tr><td class="c">Drag within one drive</td><td><b>Move.</b></td></tr>
+<tr><td class="c">Drag across drives</td><td><b>Copy.</b> A cross-volume move is not silently attempted.</td></tr>
+<tr><td class="c"><kbd>Ctrl</kbd>+drag</td><td><b>Copy</b>, always, whichever drive you land on.</td></tr>
+<tr><td class="c">Right-drag</td><td>Drops a small menu at the cursor: <b>Move here</b> · <b>Copy here</b> · <b>Cancel</b>.</td></tr>
+<tr><td class="c">Drop onto a folder row</td><td>Into that folder.</td></tr>
+<tr><td class="c">Drop onto empty list space</td><td>Into the folder you are currently viewing.</td></tr>
+</tbody>
+</table></div>
+
+<p>Dropping an item into the folder it already lives in does nothing. If any item in the drag &mdash; or the destination &mdash; is already busy with another operation, the whole drop is refused rather than half-applied.</p>
+
+<div class="note warn"><b><kbd>Shift</kbd>+drag is not a move modifier here.</b> Unlike Windows Explorer, holding <kbd>Shift</kbd> currently changes nothing: only <kbd>Ctrl</kbd> (force copy) and the source/destination drives decide the outcome. Use right-drag if you want to pick explicitly.</div>
+</section>
+
+<!-- ============================================================ -->
+<section id="search">
+<h2><span class="n">06</span>Search</h2>
+
+<p><kbd>Ctrl</kbd>+<kbd>F</kbd> opens the search box over the current pane. It works in two tiers from one input:</p>
+<ul>
+  <li><b>As you type</b> &mdash; an instant, case-insensitive filter of the folder you are already looking at. Filenames only, no disk access.</li>
+  <li><b>On <kbd>Enter</kbd></b> &mdash; a recursive search rooted at the current folder using bundled <a href="https://github.com/BurntSushi/ripgrep">ripgrep</a>, matching <b>file contents</b> as well as names, streamed in as it finds things.</li>
+</ul>
+
+<p>In the results: <kbd>↑</kbd> / <kbd>↓</kbd> move the highlight, <kbd>Enter</kbd> opens the highlighted hit, <kbd>Esc</kbd> closes.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Behaviour</th><th>Explorer mode</th><th>Developer mode</th></tr></thead>
+<tbody>
+<tr><td>Files ignored by <code>.gitignore</code></td><td class="c">Skipped</td><td class="c">Searched</td></tr>
+<tr><td>Hidden files and dotfiles</td><td class="c">Skipped</td><td class="c">Searched</td></tr>
+</tbody>
+</table></div>
+
+<p>Results stop at 2000 hits and say so (<code>2000+ (stopped early)</code>); each preview line is trimmed to 300 characters. If the ripgrep binary is missing the search degrades to names only and tells you.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="git">
+<h2><span class="n">07</span>Git &amp; the diff view</h2>
+
+<p>Inside a git repository, every row carries git's own status letter in the gutter.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Mark</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td class="c"><code>M</code></td><td>Modified</td></tr>
+<tr><td class="c"><code>A</code></td><td>Added &mdash; staged</td></tr>
+<tr><td class="c"><code>D</code></td><td>Deleted</td></tr>
+<tr><td class="c"><code>U</code></td><td>New &mdash; not tracked by git yet</td></tr>
+<tr><td class="c"><code>R</code></td><td>Renamed</td></tr>
+<tr><td class="c"><code>·</code></td><td>This folder <em>contains</em> changes</td></tr>
+</tbody>
+</table></div>
+
+<p>Files git reports as deleted still appear, as struck-through ghost rows. Double-click one to see what was removed.</p>
+
+<h3>Show changes</h3>
+<p><b>Show changes</b> on a modified file opens a coloured unified diff in a viewer tab. Two things about it matter in practice:</p>
+<ul>
+  <li>The line numbers are <b>real file line numbers</b> taken from the hunk headers &mdash; the number you can type back into Claude, not a position within the diff.</li>
+  <li>It diffs against <b>HEAD, not the index</b>, so work Claude has already staged still shows a real diff instead of an empty pane.</li>
+</ul>
+<p>A binary change says so rather than rendering garbage. There is no side-by-side mode.</p>
+
+<h3>Keeping up with a live session</h3>
+<p>The gutter refreshes when the terminal next door goes quiet: after the last byte of terminal output settles, git status is re-read, and if nothing is mid-flight &mdash; no rename box open, no menu, no drag, no selection in progress &mdash; the listing reloads too. So you can watch a session edit while you browse.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="viewer">
+<h2><span class="n">08</span>File viewer</h2>
+
+<p>Double-clicking a file opens it in a read-only viewer tab with syntax highlighting.</p>
+<p>Recognised by extension: TypeScript/TSX, JavaScript/JSX, JSON, CSS, HTML, Markdown, shell, PowerShell, YAML and TOML. Anything else &mdash; including extensionless files like <code>LICENSE</code> and dotfiles like <code>.gitignore</code> &mdash; renders as plain text, which is a normal outcome, not a failure.</p>
+
+<h4>Limits, and why they exist</h4>
+<div class="tw"><table>
+<thead><tr><th>Limit</th><th>What happens past it</th></tr></thead>
+<tbody>
+<tr><td class="c">5 MB</td><td>Refused without reading &mdash; <i>Too large to preview</i>.</td></tr>
+<tr><td class="c">20,000 lines / 2M characters</td><td>Truncated, with a banner saying so.</td></tr>
+<tr><td class="c">200,000 characters</td><td>Still shown, but as plain text &mdash; highlighting that large blocks the UI long enough to feel like a hang.</td></tr>
+<tr><td class="c">Binary content</td><td>Refused, with an <b>Open in default app</b> button. There is no inline image preview.</td></tr>
+</tbody>
+</table></div>
+
+<p>The viewer deliberately cannot edit or save. Reading is never blocked by Explorer mode &mdash; only mutation is.</p>
+
+<h3>Opening things elsewhere</h3>
+<div class="tw"><table>
+<thead><tr><th>Action</th><th>Where</th><th>What it runs</th></tr></thead>
+<tbody>
+<tr><td>Open in default app</td><td class="c">File menu</td><td>The OS handler for that file type.</td></tr>
+<tr><td>Reveal in File Explorer</td><td class="c">File / empty-space menu</td><td>Your system file manager, with the item selected.</td></tr>
+<tr><td>Open in external terminal</td><td class="c">Folder menu</td><td>Windows Terminal (falling back to PowerShell), Terminal.app, or the first of gnome-terminal / konsole / xfce4-terminal / xterm that exists &mdash; each starting <code>claude</code> in that folder.</td></tr>
+<tr><td>Open in IDE</td><td class="c">Tab menu</td><td>Your configured <a href="#settings">IDE command</a>, default <code>code</code>.</td></tr>
+<tr><td>Open in File Explorer</td><td class="c">Tab menu</td><td>The tab's folder.</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<!-- ============================================================ -->
+<section id="tabs">
+<h2><span class="n">09</span>Tabs &amp; groups</h2>
+
+<h3>Pinning</h3>
+<p>Pin a tab from its right-click menu. Pinned tabs shrink to their icon and hold at the left of the strip, Chrome-style. A pinned tab cannot be closed until you unpin it, and cannot belong to a group.</p>
+
+<h3>Tab groups</h3>
+<p>A group is a named, coloured, contiguous run of tabs &mdash; deliberately <em>not</em> tied to a directory, so it can mean whatever you need it to. From the tab right-click menu: <b>New group from this tab</b>, then rename, recolour (Clay, Sage, Sand), collapse, ungroup, or close the group's tabs.</p>
+<p>With <a href="#settings">Group new tabs with their source</a> on (the default), a viewer or shell tab opened from a grouped tab joins that group automatically.</p>
+
+<h3>Reordering</h3>
+<p>Drag a tab along the strip. Where it lands decides its group: dropped inside a run it joins that group, dropped in open space or exactly on a seam it comes out ungrouped. Pinned tabs only reorder among themselves.</p>
+
+<h3>Closing</h3>
+<p>Closing is <b>only</b> confirmed when something unrecoverable would die with the tab &mdash; confirming every close just trains you to click through.</p>
+<div class="tw"><table>
+<thead><tr><th>Tab</th><th>Asks?</th></tr></thead>
+<tbody>
+<tr><td>Files or viewer tab</td><td class="c">No</td></tr>
+<tr><td>Terminal whose process already exited</td><td class="c">No</td></tr>
+<tr><td>Plain shell</td><td>Only if it is running something. A shell sitting idle at its prompt closes silently.</td></tr>
+<tr><td>Claude session</td><td>Unless the session reports itself <b>idle</b>. Working or awaiting-input asks; so does an unknown state.</td></tr>
+</tbody>
+</table></div>
+<p>Closing several tabs at once asks once, naming how many are live. Deleting a space always asks &mdash; and tells you which of its tabs are live and how many pinned tabs will go with it, since deleting a space closes pinned tabs too.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="spaces">
+<h2><span class="n">10</span>Spaces</h2>
+
+<p>The spaces button sits at the left edge of the tab strip. It carries a flag when a session in <em>another</em> space is waiting on you.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Action</th><th>How</th></tr></thead>
+<tbody>
+<tr><td>Switch space</td><td class="c"><kbd>Ctrl</kbd>+<kbd>1</kbd>..<kbd>9</kbd>, or click a row in the menu</td></tr>
+<tr><td>Switch to a <b>pinned</b> space</td><td class="c"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd>..<kbd>9</kbd></td></tr>
+<tr><td>Cycle spaces</td><td class="c">Hold <kbd>Ctrl</kbd>+<kbd>Tab</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Tab</kbd></td></tr>
+<tr><td>New space</td><td class="c">Spaces menu ▸ <b>New empty space</b></td></tr>
+<tr><td>Rename / delete / pin</td><td class="c">Spaces menu</td></tr>
+<tr><td>Colour a space</td><td class="c">Spaces menu ▸ <b>Color</b> &mdash; a preset, or <b>Custom…</b> for your own light and dark values</td></tr>
+<tr><td>Move a tab or group to another space</td><td class="c"><b>Move Tab to ▸</b> / <b>Move Group to ▸</b>, or drag it onto a row in the spaces menu</td></tr>
+</tbody>
+</table></div>
+
+<p><b>Hold-to-preview cycling.</b> Holding <kbd>Ctrl</kbd> and tapping <kbd>Tab</kbd> works like Alt-Tab: after a short grace period a panel appears listing your spaces, each further tap advances the highlight, and releasing <kbd>Ctrl</kbd> commits one switch. <kbd>Esc</kbd> mid-hold cancels without switching &mdash; and is swallowed, so it will not also interrupt a Claude turn underneath. Tapping quickly still switches instantly with no panel.</p>
+
+<p>Spaces sort pinned-first, both in the menu and in cycling order. A space cannot be deleted if it is pinned or if it is the last one. All four space shortcuts are <a href="#settings">rebindable</a>.</p>
+
+<p><b>A space remembers</b> its tabs and their order, which tab was active, its split layout and divider positions, its colour and whether it is pinned.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="split">
+<h2><span class="n">11</span>Split view</h2>
+
+<p>Any space can split into a grid of panes, each with its own tab strip.</p>
+
+<h4>Making a split</h4>
+<ul>
+  <li>Drag a tab to the edge or corner of a pane to split or dock there.</li>
+  <li>Tab menu ▸ <b>Split right</b> / <b>Split down</b> (offered once the strip holds at least two tabs).</li>
+  <li><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> opens a spreadsheet-style picker &mdash; hover or arrow-key out an M&times;N arrangement up to 5&times;5, <kbd>Enter</kbd> applies it.</li>
+</ul>
+
+<h4>Adjusting</h4>
+<ul>
+  <li><b>Resize:</b> drag a divider, or focus one and use the arrow keys. Panes have an 80&nbsp;px floor.</li>
+  <li><b>Move a pane:</b> drag it by its strip background to swap with or dock beside another; or <kbd>Ctrl</kbd>+arrow inside the grid picker. <kbd>Alt</kbd>+drag on a pane body does the same from anywhere in the pane; <kbd>Esc</kbd> aborts a drag in progress.</li>
+</ul>
+
+<p>Closing a pane's last tab removes that pane and hands its rectangle to a neighbour; closing a <em>pane</em> merges its tabs into the neighbour instead. Nothing is ever lost, and dropping below two panes quietly returns you to a single strip.</p>
+
+<div class="note"><b>Terminals survive all of this.</b> Rearranging a split never unmounts or re-parents a terminal &mdash; only its grid position moves &mdash; so scrollback and a running Claude turn are untouched.</div>
+</section>
+
+<!-- ============================================================ -->
+<section id="terminals">
+<h2><span class="n">12</span>Terminals</h2>
+
+<p>Terminal tabs come in two kinds. A <b>Claude session</b> runs the <code>claude</code> CLI; a <b>shell</b> is a plain prompt.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Platform</th><th>Shell used</th></tr></thead>
+<tbody>
+<tr><td class="c">Windows</td><td><code>powershell.exe -NoLogo</code></td></tr>
+<tr><td class="c">macOS</td><td><code>$SHELL -l</code> &mdash; a login shell, so Homebrew and <code>~/.local/bin</code> are on PATH</td></tr>
+<tr><td class="c">Linux</td><td><code>$SHELL</code>, or <code>/bin/bash</code></td></tr>
+</tbody>
+</table></div>
+
+<p>Claude Explorer finds the <code>claude</code> executable itself by scanning PATH plus <code>~/.local/bin</code> (and Homebrew's directories on macOS), because neither Windows nor a Dock-launched macOS app resolves a bare command name the way your shell does.</p>
+
+<h3>Keys inside a terminal</h3>
+<div class="tw"><table>
+<thead><tr><th>Key</th><th>Behaviour</th></tr></thead>
+<tbody>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>V</kbd> / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd></td><td>Paste. Clipboard <b>text</b> wins if present. If the clipboard holds only an <b>image</b> and this is a Claude tab, the keystroke is handed to Claude Code, which reads and attaches the image itself.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> or <kbd>Shift</kbd>+<kbd>Enter</kbd></td><td>Insert a literal newline instead of submitting. Plain <kbd>Enter</kbd> submits.</td></tr>
+<tr><td class="k">Right-click</td><td>Pastes clipboard text &mdash; but only when nothing is selected <em>and</em> the program is not tracking the mouse. While Claude Code is running, Claude does its own clipboard read, so the app stands down to avoid pasting twice.</td></tr>
+<tr><td class="k">Space shortcuts</td><td><kbd>Ctrl</kbd>+<kbd>1</kbd>..<kbd>9</kbd>, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd>..<kbd>9</kbd> and <kbd>Ctrl</kbd>+<kbd>Tab</kbd> are taken by the app and never reach the shell.</td></tr>
+<tr><td class="k">Everything else</td><td>Goes straight through to the shell or to Claude.</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<!-- ============================================================ -->
+<section id="awareness">
+<h2><span class="n">13</span>Session awareness</h2>
+
+<p>Claude Explorer injects HTTP hooks into the sessions it launches, so a session reports its own state instead of the app guessing from terminal output.</p>
+
+<div class="tw"><table>
+<thead><tr><th>State</th><th>Means</th></tr></thead>
+<tbody>
+<tr><td class="c"><b>working</b></td><td>A prompt was submitted, or a tool is running.</td></tr>
+<tr><td class="c"><b>awaiting-input</b></td><td>Claude is blocked on you &mdash; usually a permission prompt.</td></tr>
+<tr><td class="c"><b>idle</b></td><td>The turn finished; the session is waiting for your next prompt.</td></tr>
+<tr><td class="c"><b>stopped</b></td><td>The process exited. Derived from the process itself, never reported by it.</td></tr>
+</tbody>
+</table></div>
+
+<p>An <em>unknown</em> state is never treated as any of these. Sessions Claude itself spawned, and sessions started with agent control switched off, run without hooks and simply report nothing.</p>
+
+<h4>Where state shows up</h4>
+<ul>
+  <li>A coloured dot on the tab, with a distinct marker &mdash; not just a colour &mdash; when a session needs you.</li>
+  <li>A flag on the spaces button when a session in another space needs you, and on that space's row in the menu.</li>
+</ul>
+
+<h4>What you can turn on</h4>
+<p>The markers are always on. Three opt-ins sit in <a href="#settings">Settings</a>, and the first-run card offers them once:</p>
+<ul>
+  <li><b>A sound</b> &mdash; a short chime the moment a session starts waiting on you.</li>
+  <li><b>A desktop notification</b> &mdash; suppressed when the app is focused and that tab is already on screen, so it only fires when you would actually miss it.</li>
+  <li><b>Jump to the session that needs input</b> &mdash; held back for a moment if you are mid-keystroke somewhere else, and skipped if the tab you are looking at is itself waiting.</li>
+</ul>
+</section>
+
+<!-- ============================================================ -->
+<section id="keys">
+<h2><span class="n">14</span>Keyboard shortcuts</h2>
+
+<p>Shortcuts are written for Windows and Linux. <b>On macOS</b>, every <kbd>Ctrl</kbd> below is <kbd>⌘</kbd> instead &mdash; except space cycling, which stays <kbd>Ctrl</kbd>+<kbd>Tab</kbd> because <kbd>⌘</kbd>+<kbd>Tab</kbd> belongs to the OS.</p>
+
+<h3>Spaces and window</h3>
+<p>These work anywhere, <b>including inside a terminal</b> &mdash; only the app's own text boxes decline them.</p>
+<div class="tw"><table>
+<thead><tr><th>Key</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>1</kbd>…<kbd>9</kbd></td><td>Switch to the n-th unpinned space. <i>Rebindable.</i></td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1</kbd>…<kbd>9</kbd></td><td>Switch to the n-th pinned space. <i>Rebindable.</i></td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Tab</kbd></td><td>Next space. Hold for the Alt-Tab-style preview panel. <i>Rebindable.</i></td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Previous space. <i>Rebindable.</i></td></tr>
+<tr><td class="k"><kbd>Esc</kbd></td><td>While holding the space switcher: cancel without switching.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd></td><td>Open the split-grid picker.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>T</kbd></td><td>New tab.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>W</kbd></td><td>Close tab.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>,</kbd></td><td>Open Settings.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd></td><td>Toggle Explorer / Developer mode.</td></tr>
+</tbody>
+</table></div>
+
+<h3>File pane</h3>
+<p>These apply when a files tab has focus and you are not typing in a box.</p>
+<div class="tw"><table>
+<thead><tr><th>Key</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>F</kbd></td><td>Search this folder.</td></tr>
+<tr><td class="k"><kbd>Backspace</kbd></td><td>Up one folder.</td></tr>
+<tr><td class="k"><kbd>Alt</kbd>+<kbd>←</kbd> / <kbd>Alt</kbd>+<kbd>→</kbd></td><td>Back / forward.</td></tr>
+<tr><td class="k"><kbd>F5</kbd></td><td>Refresh the listing and git status.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>A</kbd></td><td>Select all.</td></tr>
+<tr><td class="k"><kbd>Esc</kbd></td><td>Clear the selection; close any menu.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>X</kbd> / <kbd>C</kbd> / <kbd>V</kbd></td><td>Cut / copy / paste.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></td><td>Undo / redo.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd></td><td>New folder, then rename it.</td></tr>
+<tr><td class="k"><kbd>F2</kbd></td><td>Rename &mdash; with exactly one item selected.</td></tr>
+<tr><td class="k"><kbd>Delete</kbd></td><td>Delete to the Recycle Bin, after a confirmation.</td></tr>
+<tr><td class="k"><kbd>Shift</kbd>+<kbd>Delete</kbd></td><td>Permanent delete. Developer mode only; no undo.</td></tr>
+</tbody>
+</table></div>
+
+<h3>Terminal</h3>
+<div class="tw"><table>
+<thead><tr><th>Key</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>V</kbd></td><td>Paste text &mdash; or hand an image on the clipboard to Claude.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> / <kbd>Shift</kbd>+<kbd>Enter</kbd></td><td>Newline without submitting.</td></tr>
+<tr><td class="k">Right-click</td><td>Paste, when nothing is selected and the program is not tracking the mouse.</td></tr>
+</tbody>
+</table></div>
+
+<h3>Overlays, dialogs and split view</h3>
+<div class="tw"><table>
+<thead><tr><th>Key</th><th>Where</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td class="k"><kbd>↑</kbd> / <kbd>↓</kbd></td><td class="c">Search results</td><td>Move the highlight.</td></tr>
+<tr><td class="k"><kbd>Enter</kbd></td><td class="c">Search</td><td>Start the deep search, or open the highlighted result.</td></tr>
+<tr><td class="k"><kbd>Esc</kbd></td><td class="c">Search</td><td>Close the overlay.</td></tr>
+<tr><td class="k">Arrows</td><td class="c">Grid picker</td><td>Grow or shrink the arrangement.</td></tr>
+<tr><td class="k"><kbd>Ctrl</kbd>+arrow</td><td class="c">Grid picker</td><td>Move the focused pane. Applied immediately &mdash; <kbd>Esc</kbd> does not undo it.</td></tr>
+<tr><td class="k"><kbd>Enter</kbd> / <kbd>Space</kbd></td><td class="c">Grid picker</td><td>Apply the highlighted arrangement.</td></tr>
+<tr><td class="k">Arrows</td><td class="c">Focused divider</td><td>Nudge the divider.</td></tr>
+<tr><td class="k"><kbd>Alt</kbd>+drag</td><td class="c">A pane</td><td>Grab it to move or reflow. <kbd>Esc</kbd> aborts.</td></tr>
+<tr><td class="k"><kbd>↑</kbd> / <kbd>↓</kbd></td><td class="c">Spaces menu</td><td>Move between rows.</td></tr>
+<tr><td class="k"><kbd>Enter</kbd> / <kbd>Esc</kbd></td><td class="c">Any rename box</td><td>Commit / cancel.</td></tr>
+<tr><td class="k"><kbd>Esc</kbd></td><td class="c">Any dialog</td><td>Cancel. On an agent spawn request this is an explicit <b>Deny</b>.</td></tr>
+</tbody>
+</table></div>
+
+<div class="note"><b>Rebinding.</b> The four space actions are rebindable in Settings ▸ Keybinds. A binding that collides with another space action is refused; one that collides with a fixed app shortcut is allowed with a warning. Nothing else in these tables is rebindable. Note that <kbd>Ctrl</kbd>+<kbd>T</kbd> and <kbd>Ctrl</kbd>+<kbd>W</kbd> are OS-level menu accelerators, so rebinding a space action onto them will save but will not fire.</div>
+</section>
+
+<!-- ============================================================ -->
+<section id="menus">
+<h2><span class="n">15</span>Menu reference</h2>
+
+<div class="menu">
+<ul>
+<li class="top"><span>File</span><span></span></li>
+<ul>
+  <li><span>New Tab</span><span><kbd>Ctrl</kbd>+<kbd>T</kbd></span></li>
+  <li><span>Close Tab</span><span><kbd>Ctrl</kbd>+<kbd>W</kbd></span></li>
+  <hr>
+  <li><span>Open Recent ▸</span><span>up to 20 folders</span></li>
+  <ul>
+    <li><span>&lt;folder&gt; ▸ Open Folder</span><span>a files tab there</span></li>
+    <li><span>&lt;folder&gt; ▸ + New session</span><span>a fresh Claude session</span></li>
+    <li><span>&lt;folder&gt; ▸ &lt;session&gt;</span><span>resume that conversation</span></li>
+  </ul>
+  <hr>
+  <li><span>Quit</span><span></span></li>
+</ul>
+
+<li class="top"><span>Edit</span><span></span></li>
+<ul><li><span>Undo · Redo · Cut · Copy · Paste · Select All</span><span>standard text editing</span></li></ul>
+
+<li class="top"><span>View</span><span></span></li>
+<ul><li><span>Reload · Force Reload · Toggle Developer Tools · Zoom · Full Screen</span><span>standard</span></li></ul>
+
+<li class="top"><span>Window</span><span></span></li>
+<ul><li><span>Minimize · Zoom · Close</span><span>standard</span></li></ul>
+
+<li class="top"><span>Settings</span><span></span></li>
+<ul>
+  <li><span>Preferences…</span><span><kbd>Ctrl</kbd>+<kbd>,</kbd></span></li>
+  <hr>
+  <li><span>Toggle Developer Mode</span><span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd></span></li>
+</ul>
+</ul>
+</div>
+
+<p><b>Open Recent</b> lists your recent folders, and under each one the Claude conversations you can resume &mdash; read straight from <code>~/.claude/projects</code>, so you can pick up an old session without remembering a session id or touching a terminal. Times are shown relative ("2 hours ago").</p>
+<p>The Edit, View and Window menus are the standard platform ones. Note that Edit's Cut/Copy/Paste act on whatever text field has focus &mdash; the file pane's own clipboard is the <a href="#fileops">Ctrl+X / C / V</a> described earlier, which is separate.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="settings">
+<h2><span class="n">16</span>Settings</h2>
+<p><kbd>Ctrl</kbd>+<kbd>,</kbd>, or Settings ▸ Preferences…</p>
+
+<div class="tw"><table>
+<thead><tr><th>Setting</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><b>IDE command</b></td><td class="c"><code>code</code></td><td>What <b>Open in IDE</b> runs, with the folder as its argument.</td></tr>
+<tr><td><b>Group new tabs with their source</b></td><td class="c">On</td><td>A viewer or shell tab opened from a grouped tab joins that group.</td></tr>
+<tr><td><b>Let Claude sessions control Claude Explorer</b></td><td class="c">On</td><td>The master switch for <a href="#agent">agent control</a>. Off stops the server at once; sessions already running keep what they launched with.</td></tr>
+<tr><td><b>Sessions Claude may open without asking</b></td><td class="c">8</td><td>0, 4, 8 or 16. How many concurrent sessions Claude may start before it has to ask you. A throttle, not a cap &mdash; 0 means ask every time.</td></tr>
+<tr><td><b>Keybinds</b></td><td class="c">&mdash;</td><td>Rebind the four space actions: switch to space, switch to pinned space, next space, previous space. Each has <b>Change</b> and <b>Reset</b>.</td></tr>
+<tr><td><b>Play a sound when a session needs you</b></td><td class="c">Off</td><td>A short chime when a session starts waiting on you.</td></tr>
+<tr><td><b>Desktop notifications, even when Claude Explorer is not the active window</b></td><td class="c">Off</td><td>A system notification on the same transition.</td></tr>
+<tr><td><b>Jump to the session that needs input</b></td><td class="c">Off</td><td>Switches the active tab to a session that just started waiting.</td></tr>
+</tbody>
+</table></div>
+
+<p>Explorer / Developer mode is not in this dialog &mdash; it is the button in the status bar, or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd>.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="cli">
+<h2><span class="n">17</span>Command line</h2>
+
+<div class="tw"><table>
+<thead><tr><th>Flag</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td class="k"><code>--open &lt;path&gt;</code></td><td>Opens a folder in a files tab, or a file in the viewer.</td></tr>
+<tr><td class="k"><code>--new-session &lt;folder&gt;</code></td><td>Opens that folder, ready for you to start a session in one click. Refused on a file path.</td></tr>
+</tbody>
+</table></div>
+
+<pre><code>"Claude Explorer.exe" --open C:\repos\my-project
+"Claude Explorer.exe" --new-session C:\repos\my-project</code></pre>
+
+<p>If the app is already running, these open in the existing window rather than starting a second copy.</p>
+
+<div class="note"><b>Neither flag starts Claude by itself.</b> That is deliberate, not an omission: the command line of a running app is reachable by any local process, so <code>--new-session</code> stages the folder and leaves the actual launch to a human click. There is no code path from a command-line flag to a spawned session.</div>
+
+<h3>Windows Explorer integration</h3>
+<p>The installer adds <b>Open in Claude Explorer</b> to the right-click menu of any folder, and of the background of any open folder. It is registered per-user, so installing needs no administrator rights. On Windows 11 it lives under <b>Show more options</b> (<kbd>Shift</kbd>+<kbd>F10</kbd>) along with other classic shell verbs. Uninstalling removes it.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="modes">
+<h2><span class="n">18</span>Explorer vs Developer mode</h2>
+
+<p>Two modes, toggled from the status bar button or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd>. This is a guardrail against mis-drags and mistaken deletes &mdash; yours or an AI's &mdash; not a security sandbox: the app runs a real shell for you on request.</p>
+
+<div class="tw"><table>
+<thead><tr><th></th><th>Explorer <span style="font-weight:normal;text-transform:none">(default)</span></th><th>Developer</th></tr></thead>
+<tbody>
+<tr><td>Hidden files and dotfiles</td><td>Hidden</td><td>Shown, dimmed</td></tr>
+<tr><td>Windows noise <span style="color:var(--ink-soft)">(<code>$RECYCLE.BIN</code>, <code>System Volume Information</code>, <code>pagefile.sys</code>, <code>desktop.ini</code>, <code>Thumbs.db</code>…)</span></td><td>Hidden</td><td>Shown, dimmed</td></tr>
+<tr><td>Search</td><td>Honours <code>.gitignore</code></td><td>Searches everything</td></tr>
+<tr><td>Changing a system path</td><td>Refused, with a plain-English reason</td><td>Allowed after typing <code>CONFIRM</code></td></tr>
+<tr><td>Permanent delete</td><td>Refused</td><td>Allowed after typing <code>CONFIRM</code></td></tr>
+</tbody>
+</table></div>
+
+<h4>What counts as a protected path</h4>
+<p>The rule matches the folder <em>and everything beneath it</em>. Browsing is never restricted &mdash; only mutation.</p>
+<div class="tw"><table>
+<thead><tr><th></th><th>Windows</th><th>macOS / Linux</th></tr></thead>
+<tbody>
+<tr><td><b>System</b></td><td><code>C:\Windows</code>, <code>C:\Program Files</code>, <code>C:\Program Files (x86)</code>, <code>C:\ProgramData</code></td><td><code>/System</code>, <code>/Library</code>, <code>/usr</code>, <code>/bin</code>, <code>/sbin</code>, <code>/etc</code>, <code>/lib</code>, <code>/boot</code></td></tr>
+<tr><td><b>Drive roots</b></td><td><code>C:\</code> and any UNC share root</td><td><code>/</code> and mount containers like <code>/Volumes</code>, <code>/mnt</code>, <code>/media</code></td></tr>
+</tbody>
+</table></div>
+<p>Your home directory, <code>/Applications</code> and <code>/opt</code> are deliberately <em>not</em> protected &mdash; that is where your work lives.</p>
+
+<div class="note"><b>The trash staging folder is off-limits in both modes.</b> Changing it would break a pending undo, so no mode unlocks it.</div>
+
+<p>Every one of these decisions is made in the main process, not in the UI, so no call site can forget to ask &mdash; including the ones an agent reaches.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="agent">
+<h2><span class="n">19</span>Agent control (MCP)</h2>
+
+<p>Sessions launched by Claude Explorer can drive the app itself, through a small MCP server the app runs in-process.</p>
+
+<div class="tw"><table>
+<thead><tr><th>Tool</th><th>Parameters</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td class="k"><code>list_tabs</code></td><td class="c">none</td><td>Lists every tab: id, kind, folder, title, and for terminals their status.</td></tr>
+<tr><td class="k"><code>close_tab</code></td><td class="c"><code>tabId</code></td><td>Closes that tab, ending its process. It never guesses a target.</td></tr>
+<tr><td class="k"><code>open_viewer_tab</code></td><td class="c"><code>path</code></td><td>Opens a git diff for that file, so it can show you something. Returns no file content.</td></tr>
+<tr><td class="k"><code>open_claude_session</code></td><td class="c"><code>path</code></td><td>Starts a new Claude session in a new tab at that folder.</td></tr>
+</tbody>
+</table></div>
+
+<h3>The security model</h3>
+<p>The server binds to <code>127.0.0.1</code> only, on an ephemeral port, and every request must carry a bearer token minted fresh each time the app runs and never written to disk. The token is the whole authentication: an unauthenticated local process gets a 401. Every path argument is validated and resolved before any tool acts on it.</p>
+
+<h3>Three limits worth knowing</h3>
+<ul>
+  <li><b>Spawning throttles, it does not refuse.</b> Below your free allowance, <code>open_claude_session</code> opens a tab silently. At or above it, dead agent tabs are reaped first, and if that does not free a slot you get a modal naming the folder in full. An approval always starts the session &mdash; there is no count at which the tool simply says no. Because reaping returns slots, the number bounds <em>concurrent</em> sessions, not lifetime ones. A denial arms a brief cooldown so a session cannot spam you.</li>
+  <li><b>Fan-out cannot compound.</b> A session started <em>by</em> the tool gets neither the tools nor the token, so it structurally cannot open further sessions. It also gets no state hooks, which is why an agent-spawned tab shows no status dot.</li>
+  <li><b>One switch removes all of it.</b> Settings ▸ <i>Let Claude sessions control Claude Explorer</i>. Off stops the server immediately; sessions already running keep whatever they were launched with.</li>
+</ul>
+</section>
+
+<!-- ============================================================ -->
+<section id="data">
+<h2><span class="n">20</span>Where data lives</h2>
+
+<p>Under the app's user-data folder &mdash; on Windows, <code>%APPDATA%\claude-explorer</code>:</p>
+<div class="tw"><table>
+<thead><tr><th>File</th><th>Holds</th></tr></thead>
+<tbody>
+<tr><td class="k"><code>workspace.json</code></td><td>Your spaces, tabs, groups and split layouts. Restored at launch; Claude tabs come back dormant, ready to resume.</td></tr>
+<tr><td class="k"><code>settings.json</code></td><td>Everything in <a href="#settings">Settings</a>.</td></tr>
+<tr><td class="k"><code>recents.json</code></td><td>Up to 20 recent folders.</td></tr>
+<tr><td class="k"><code>mcp-agent-control.json</code><br><code>claude-hooks.json</code></td><td>Regenerated every launch &mdash; the config files Claude Code is pointed at. Neither contains the real token.</td></tr>
+</tbody>
+</table></div>
+<p>Your conversations are not app-owned. They stay where Claude Code puts them, in <code>~/.claude/projects</code>, and are read on demand.</p>
+</section>
+
+<!-- ============================================================ -->
+<section id="platforms">
+<h2><span class="n">21</span>Platforms &amp; updates</h2>
+
+<div class="tw"><table>
+<thead><tr><th>Platform</th><th>Artifact</th><th>Auto-update</th></tr></thead>
+<tbody>
+<tr><td>Windows</td><td class="c"><code>Claude-Explorer-Setup-x.y.z.exe</code></td><td class="c">Yes</td></tr>
+<tr><td>macOS (Apple Silicon)</td><td class="c"><code>Claude-Explorer-x.y.z-arm64.dmg</code></td><td class="c"><b>No</b></td></tr>
+<tr><td>macOS (Intel)</td><td class="c"><code>Claude-Explorer-x.y.z-x64.dmg</code></td><td class="c"><b>No</b></td></tr>
+<tr><td>Linux (x64)</td><td class="c"><code>Claude-Explorer-x.y.z-x86_64.AppImage</code></td><td class="c">Yes</td></tr>
+</tbody>
+</table></div>
+
+<p>An app installed from a release checks GitHub Releases on start, downloads in the background and offers to restart. Built from source, auto-update is off &mdash; local builds are not tied to the release feed.</p>
+
+<h3>macOS: the app is unsigned, and Gatekeeper will say so</h3>
+<p>Claude Explorer is not signed with an Apple Developer ID and is not notarized &mdash; that needs a paid Apple Developer Program membership this project does not have. Nothing is wrong with your download; Apple simply has no way to attest to it. The first launch says:</p>
+<blockquote style="border-left:3px solid var(--line);margin:12px 0;padding-left:16px;color:var(--ink-soft);max-width:72ch">"Claude Explorer" cannot be opened because Apple cannot check it for malicious software.</blockquote>
+<ol class="body">
+  <li><b>Right-click</b> the app in Applications and choose <b>Open</b>, then <b>Open</b> again. Double-clicking will not offer this &mdash; the right-click menu is what unlocks it.</li>
+  <li>Or: <b>System Settings ▸ Privacy &amp; Security</b>, scroll to the message about Claude Explorer, <b>Open Anyway</b>.</li>
+  <li>If macOS says the app <b>"is damaged and can't be opened"</b>, that is the quarantine flag, not damage: <code>xattr -cr "/Applications/Claude Explorer.app"</code></li>
+</ol>
+<p>You do this once per installed version. <b>Auto-update is switched off on macOS</b> as a direct consequence: macOS verifies an update against the app's signature before installing, so an unsigned build cannot update itself. Rather than download ~100&nbsp;MB on every launch and fail at the last step, the app does not try. Watch the Releases page and drag the new DMG over the old app.</p>
+
+<h3>Linux</h3>
+<p>Download the AppImage, <code>chmod +x</code> it, run it. Two differences from Windows, neither a bug: the unread-session badge goes through the Unity Launcher API, so Unity, KDE and GNOME-with-Dash-to-Dock show it while plain GNOME Shell shows nothing (the in-app markers work either way); and <b>Open in Terminal</b> tries a list of known terminal emulators, declining rather than guessing if none is installed.</p>
+</section>
+
+<footer>
+  <p>Claude Explorer v0.10.1 &mdash; <a href="https://github.com/danmano411/claude-explorer">github.com/danmano411/claude-explorer</a> &mdash; Apache-2.0.</p>
+  <p>Found something here that does not match the app? <a href="https://github.com/danmano411/claude-explorer/issues">Open an issue</a>.</p>
+</footer>
+
+</main>
+</div>
+</body>
+</html>

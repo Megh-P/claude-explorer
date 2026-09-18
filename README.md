@@ -10,6 +10,11 @@
   and keeping every session you start somewhere you can actually see it.
 </p>
 
+<p align="center">
+  <b><a href="https://danmano411.github.io/claude-explorer/">Read the manual</a></b> —
+  every feature, menu, command and keyboard shortcut in one page.
+</p>
+
 ---
 
 ## Quickstart
